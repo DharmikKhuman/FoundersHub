@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersHub | B2B Services Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+<style>
+    /* --- 1. PREMIUM DARK GLASS VARIABLES --- */
+    :root {
+        --rich-bg: #0B1120; 
+        --primary-accent: #8B5CF6; 
+        --text-light: #FFFFFF;
+        --text-muted-light: #94A3B8;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.08); 
+        --glass-blur: blur(16px);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    /* --- 2. GLOBAL RESET --- */
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--rich-bg);
+        color: var(--text-light);
+        line-height: 1.7;
+        background-image: radial-gradient(circle at 50% 0%, #2e1065 0%, #0B1120 50%);
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, h5, h6, .navbar-brand, .hero-title, .card-title {
+        color: var(--text-light) !important;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    .text-muted { color: var(--text-muted-light) !important; }
+    .bg-light, .bg-white { background-color: transparent !important; }
+
+    /* --- 3. NAVBAR --- */
+    .navbar {
+        background: rgba(11, 17, 32, 0.8) !important;
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border-bottom: var(--glass-border);
+        padding: 1rem 0;
+    }
+    .navbar-light .navbar-nav .nav-link { color: rgba(255,255,255,0.8); font-weight: 500; transition: 0.3s; }
+    .navbar-light .navbar-nav .nav-link.active,
+    .navbar-light .navbar-nav .nav-link:hover { color: var(--primary-accent); }
+    
+    .navbar-toggler { border: none; padding: 0; }
+    .navbar-toggler:focus { box-shadow: none; }
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* --- 4. HERO & SEARCH --- */
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+    }
+    
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .search-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        padding: 15px 25px;
+        padding-right: 60px;
+        color: white;
+        width: 100%;
+        backdrop-filter: blur(10px);
+        transition: 0.3s;
+    }
+    .search-input:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--primary-accent);
+        outline: none;
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--primary-accent);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+    .search-btn:hover { background: white; color: var(--primary-accent); }
+
+    /* --- 5. TABS --- */
+    .nav-pills-container {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .nav-pills-container::-webkit-scrollbar { display: none; }
+
+    .nav-pills .nav-link {
+        color: var(--text-muted-light);
+        background-color: rgba(255,255,255,0.03);
+        border: var(--glass-border);
+        font-weight: 500;
+        border-radius: 50px;
+        padding: 10px 25px;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    .nav-pills .nav-link.active {
+        background-color: var(--primary-accent);
+        color: white;
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+    .nav-pills .nav-link:hover:not(.active) {
+        background-color: rgba(255,255,255,0.08);
+        color: white;
+        border-color: rgba(255,255,255,0.3);
+    }
+
+    /* --- 6. GLASS CARDS --- */
+    .listing-card {
+        border: var(--glass-border);
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        box-shadow: var(--glass-shadow);
+        border-radius: 16px;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .listing-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(139, 92, 246, 0.5);
+        box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+    }
+
+    .listing-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+    }
+
+    .listing-img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transition: 0.5s; 
+    }
+    .listing-card:hover .listing-img { transform: scale(1.05); }
+    
+    .category-badge {
+        position: absolute; top: 15px; left: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        backdrop-filter: blur(4px);
+    }
+
+    .verified-badge {
+        position: absolute; top: 15px; right: 15px;
+        background: var(--primary-accent);
+        color: white;
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.8rem;
+        box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        z-index: 2;
+    }
+
+    .card-body { padding: 1.5rem; }
+    .service-price { color: var(--primary-accent); font-weight: 700; font-size: 1.1rem; }
+
+    /* --- 7. BUTTONS & FORMS --- */
+    .btn-primary {
+        background-color: var(--primary-accent);
+        border-color: var(--primary-accent);
+        padding: 0.5rem 1.2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #7c3aed;
+        border-color: #7c3aed;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+    
+    .btn-outline-primary {
+        color: var(--text-light);
+        border-color: rgba(255,255,255,0.2);
+    }
+    .btn-outline-primary:hover {
+        background-color: var(--primary-accent);
+        border-color: var(--primary-accent);
+        color: white;
+    }
+
+    /* Modal Styling */
+    .modal-content {
+        background: #0F172A;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: white;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+    .modal-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .modal-footer { border-top: 1px solid rgba(255,255,255,0.1); }
+    .btn-close { filter: invert(1); opacity: 0.8; }
+    
+    .form-control {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+    }
+    .form-control:focus {
+        background: rgba(255,255,255,0.08);
+        border-color: var(--primary-accent);
+        color: white;
+        box-shadow: none;
+    }
+
+    /* --- 8. FOOTER --- */
+    footer {
+        background: transparent !important;
+        padding: 50px 0 30px;
+        border-top: var(--glass-border);
+        color: #94a3b8;
+    }
+
+    /* Mobile Nav */
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: rgba(11, 17, 32, 0.98); 
+            backdrop-filter: blur(25px);
+            padding: 2rem;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .navbar-nav .nav-link { text-align: center; padding: 10px 0; }
+    }
+</style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="index.html">FoundersHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="services.html">Browse Marketplace</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item ms-lg-2 mt-3 mt-lg-0">
+                        <a class="btn btn-outline-primary btn-sm w-100" href="register.html">Provider Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 text-center">
+        <div class="container">
+            <h1 class="hero-title fw-bold">Service Marketplace</h1>
+            <p class="lead opacity-75 mb-4">Renting, Hiring, Sourcing, and Building. Everything you need to scale.</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search (e.g., 'Office Space', 'Java Developer', 'Packaging')...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-3">
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 text-center">
+                <div class="nav-pills-container">
+                    <ul class="nav nav-pills d-inline-flex" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-realestate-tab" data-bs-toggle="pill" data-bs-target="#pills-realestate" type="button">🏢 Real Estate</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-interior-tab" data-bs-toggle="pill" data-bs-target="#pills-interior" type="button">🪑 Furniture & Infra</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-hr-tab" data-bs-toggle="pill" data-bs-target="#pills-hr" type="button">👥 HR & Staff</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-material-tab" data-bs-toggle="pill" data-bs-target="#pills-material" type="button">📦 Materials & Logistics</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-legal-tab" data-bs-toggle="pill" data-bs-target="#pills-legal" type="button">⚖️ Legal & Finance</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-tech-tab" data-bs-toggle="pill" data-bs-target="#pills-tech" type="button">💻 Tech & Dev</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade show active" id="pills-realestate" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Office">
+                                <span class="category-badge">Workspace</span>
+                                <div class="verified-badge" title="Verified Provider"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Commercial Office Leasing</h5>
+                                <p class="text-muted small">Bare shell and furnished options in prime tech parks (Bangalore, Mumbai, NCR).</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">From ₹65/sqft</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Coworking">
+                                <span class="category-badge">Coworking</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Flexi-Desk Passes</h5>
+                                <p class="text-muted small">Access to 50+ coworking locations across India. High-speed WiFi & Coffee.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹4,999/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1519642918688-7e43b19245d8?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Retail">
+                                <span class="category-badge">Retail</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">High Street Retail Shops</h5>
+                                <p class="text-muted small">Prime ground floor spots for Cafes, Salons, and Boutiques.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹1 Lakh/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Warehouse">
+                                <span class="category-badge">Storage</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Industrial Warehouses</h5>
+                                <p class="text-muted small">Logistics-ready sheds with loading docks. Bhiwandi, Manesar, etc.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹15/sqft</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Virtual Office">
+                                <span class="category-badge">Registration</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Virtual Office Address</h5>
+                                <p class="text-muted small">Premium business address for GST registration and mail handling.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹12,000/yr</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Meeting">
+                                <span class="category-badge">On-Demand</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Meeting Rooms</h5>
+                                <p class="text-muted small">Book conference rooms by the hour in 20+ cities.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹400/hr</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-interior" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Furniture">
+                                <span class="category-badge">Rental</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Office Furniture Rental</h5>
+                                <p class="text-muted small">Ergonomic chairs, desks, and meeting tables on monthly subscription.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹499/seat/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Construction">
+                                <span class="category-badge">Fitout</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Commercial Fitouts</h5>
+                                <p class="text-muted small">Turnkey interior projects for offices, restaurants, and retail stores.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Custom Quote</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Laptops">
+                                <span class="category-badge">IT Infra</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">IT Hardware Leasing</h5>
+                                <p class="text-muted small">Rent MacBooks, Windows Laptops, and Servers for your team.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹1,500/device/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="AC">
+                                <span class="category-badge">Appliances</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">AC & HVAC Rental</h5>
+                                <p class="text-muted small">Industrial and split ACs on rent. Includes free maintenance.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹800/ton/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Security">
+                                <span class="category-badge">Security</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">CCTV & Biometrics</h5>
+                                <p class="text-muted small">Surveillance setup and attendance systems for offices/factories.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Installation Only</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Kitchen">
+                                <span class="category-badge">Kitchen</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Cloud Kitchen Equip</h5>
+                                <p class="text-muted small">Rent Ovens, Freezers, and Burners for food startups.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹15,000/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-hr" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Recruitment">
+                                <span class="category-badge">Hiring</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Tech Recruitment</h5>
+                                <p class="text-muted small">Source pre-vetted developers (React, Node, Python) in 48 hours.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">8.33% Success Fee</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Blue Collar">
+                                <span class="category-badge">Staffing</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Blue Collar Staffing</h5>
+                                <p class="text-muted small">Delivery riders, warehouse staff, and housekeeping personnel.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Bulk Rates</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Payroll">
+                                <span class="category-badge">Compliance</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Payroll & PF Mgmt</h5>
+                                <p class="text-muted small">Automated payroll processing, PF/ESI filing, and tax slips.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹100/emp/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="CXO">
+                                <span class="category-badge">Leadership</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Fractional CMO/CFO</h5>
+                                <p class="text-muted small">Hire experienced C-suite leaders on a part-time basis.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Retainer Basis</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Training">
+                                <span class="category-badge">Upskilling</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Corporate Training</h5>
+                                <p class="text-muted small">Soft skills, sales training, and technical workshops for teams.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹15,000/session</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-material" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Packaging">
+                                <span class="category-badge">Packaging</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Custom Packaging</h5>
+                                <p class="text-muted small">Branded boxes, tape, and eco-friendly mailers for E-commerce.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">MOQ 500 units</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Logistics">
+                                <span class="category-badge">Logistics</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Hyperlocal Delivery</h5>
+                                <p class="text-muted small">Same-day delivery fleet API integration for D2C brands.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹40/order</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Fabric">
+                                <span class="category-badge">Sourcing</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Raw Material Sourcing</h5>
+                                <p class="text-muted small">Bulk fabrics, food ingredients, and industrial chemicals.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Wholesale Rates</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1521572008054-962cefc90ce7?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Import">
+                                <span class="category-badge">Import/Export</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Customs Clearing</h5>
+                                <p class="text-muted small">CHA services for importing machinery or goods.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Per Shipment</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1589309736404-2e142a2acdf9?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Merch">
+                                <span class="category-badge">Branding</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Corporate Swag/Merch</h5>
+                                <p class="text-muted small">T-shirts, bottles, and welcome kits for new employees.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹1000/kit</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-legal" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="CA">
+                                <span class="category-badge">Finance</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Virtual CFO & CA</h5>
+                                <p class="text-muted small">Monthly bookkeeping, GST filings, and financial planning.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹5,000/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Trademark">
+                                <span class="category-badge">IP Rights</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Trademark Registration</h5>
+                                <p class="text-muted small">Protect your brand name and logo. Includes government fees.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹6,999</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Valuation">
+                                <span class="category-badge">Fundraising</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Startup Valuation</h5>
+                                <p class="text-muted small">Certified valuation reports for angel investment rounds.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹25,000</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Contract">
+                                <span class="category-badge">Legal</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Contract Drafting</h5>
+                                <p class="text-muted small">NDAs, Founder Agreements, and Vendor Contracts.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹3,000/doc</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="ISO">
+                                <span class="category-badge">Certification</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">ISO Certification</h5>
+                                <p class="text-muted small">ISO 9001 (Quality) and 27001 (InfoSec) certification support.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Custom Quote</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-tech" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Code">
+                                <span class="category-badge">Software</span>
+                                <div class="verified-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Full Stack Development</h5>
+                                <p class="text-muted small">Web and Mobile app development (MERN Stack).</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">Project Basis</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="SEO">
+                                <span class="category-badge">Marketing</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Performance Marketing</h5>
+                                <p class="text-muted small">Google Ads & FB Ads management to drive leads.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">15% of Spend</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Design">
+                                <span class="category-badge">Design</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">UI/UX Design</h5>
+                                <p class="text-muted small">App and Web design prototypes using Figma.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹15,000/screen</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="Cyber">
+                                <span class="category-badge">Security</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Cyber Security Audit</h5>
+                                <p class="text-muted small">Vulnerability assessment and VAPT for fintech/SaaS.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹50,000</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card listing-card">
+                            <div class="listing-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=400" class="listing-img" alt="SaaS">
+                                <span class="category-badge">Tools</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">SaaS Bundle</h5>
+                                <p class="text-muted small">Discounted bundle: CRM, Slack, AWS credits, and Zoom.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="service-price">₹5,000/mo</span>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Provider</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-control" placeholder="Aditya Roy">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="aditya@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" rows="3" placeholder="Hi, I am interested in this service for my startup..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Send Inquiry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-auto">
+        <div class="container text-center">
+            <div class="mb-3">
+                <span class="text-white fw-bold h5">FoundersHub</span>
+            </div>
+            <p class="small opacity-50">&copy; 2025 FoundersHub Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
